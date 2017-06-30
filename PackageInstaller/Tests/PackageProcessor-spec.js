@@ -1,5 +1,6 @@
 ﻿//PackageProcessor-spec.js
 
+var expect = require('chai').expect;
 var PackageProcessor = require('../Scripts/PackageProcessor.js');
 
 describe('parsePackage', function () {
@@ -7,6 +8,7 @@ describe('parsePackage', function () {
         var input = "KittenService: CamelCaser";
         var expectedOutput = { packageName: 'KittenService', dependency: 'CamelCaser' };
         var actual = PackageProcessor.parsePackage(input);
+
         expect(actual).to.eql(expectedOutput);
     });
 });
