@@ -1,0 +1,9 @@
+{
+  "name": "package-installer",
+  "version": "0.0.0",
+  "description": "PackageInstaller",
+  "main": "server.js",
+  "author": {
+    "name": "Tyler"
+  }
+}
