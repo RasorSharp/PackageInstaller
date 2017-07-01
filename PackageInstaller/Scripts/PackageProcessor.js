@@ -32,6 +32,9 @@ PackageProcessor = {
     },
     getDependencyOrder: function (packagesArray) {
         return 'KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream';
+    },
+    hasIncomingEdge: function (node, arrayToSearch) {
+        return true;
     }
 };
 

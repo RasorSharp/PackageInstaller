@@ -125,13 +125,13 @@ describe('hasIncomingEdge', function () {
     it('For an array of dependency objects, checks to see if a given node has any incoming edges', function () {
         var node = { packageName: 'CamelCaser', dependency: '' };
         var input = [{ packageName: 'KittenService', dependency: 'CamelCaser' }, { packageName: 'CamelCaser', dependency: '' }]
-        var expectedOuput = true;
+        var expectedOutput = true;
         var actual = PackageProcessor.hasIncomingEdge(node, input);
-        expect(actual).to.equal(expectedOuput);
+        expect(actual).to.equal(expectedOutput);
 
         node = { packageName: 'KittenService', dependency: 'CamelCaser' };
-        expectedOuput = false;
+        expectedOutput = false;
         actual = PackageProcessor.hasIncomingEdge(node, input);
-        exepect(actual).to.equal(expectedOutput);
+        expect(actual).to.equal(expectedOutput);
     });
 });
