@@ -92,5 +92,31 @@ describe('getDepedencyOrder', function () {
         var actual = PackageProcessor.getDependencyOrder(input);
 
         expect(actual).to.equal(expectedOutput);
+
+        //tests for invalid inputs
+
+        var invalidInput = null;
+        var badFn = function () {
+            PackageProcessor.getDependencyOrder(invalidInput);
+        }
+        expect(badFn).to.throw();
+
+        invalidInput = new Array();
+        expect(badFn).to.throw();
+
+        invalidInput = 'Leetmeme: Cyberportal';
+        expect(badFn).to.throw();
+
+        invalidInput = [
+            'KittenService: ',
+            'Leetmeme: Cyberportal',
+            'Cyberportal: Ice',
+            'CamelCaser: KittenService',
+            'Fraudstream: ',
+            'Ice: Leetmeme'
+        ]
+        expect(badFn).to.throw();
+
+        //end invalid inputs
     });
 });
