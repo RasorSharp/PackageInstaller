@@ -37,7 +37,6 @@ describe('parsePackage', function () {
         expect(badFn).to.throw();
 
         //end invalid inputs
-
     });
 });
 
@@ -49,7 +48,7 @@ describe('processPackageArray', function () {
             'CamelCaser: KittenService',
             'Fraudstream: Leetmeme',
             'Ice: '
-        ]
+        ];
         var expectedOutput = [
             { packageName: 'KittenService', dependency: '' },
             { packageName: 'Leetmeme', dependency: 'Cyberportal' },
@@ -77,5 +76,21 @@ describe('processPackageArray', function () {
         expect(badFn).to.throw();
 
         //end invalid inputs
+    });
+});
+
+describe('getDepedencyOrder', function () {
+    it('Takes an array of strings representing packages and dependencies and determines what order they should be installed.', function () {
+        var input = ['KittenService: ',
+            'Leetmeme: Cyberportal',
+            'Cyberportal: Ice',
+            'CamelCaser: KittenService',
+            'Fraudstream: Leetmeme',
+            'Ice: '
+        ];
+        var expectedOutput = 'KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream';
+        var actual = PackageProcessor.getDependencyOrder(input);
+
+        expect(actual).to.equal(expectedOutput);
     });
 });
