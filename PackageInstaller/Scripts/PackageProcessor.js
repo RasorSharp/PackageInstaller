@@ -34,7 +34,11 @@ PackageProcessor = {
         return 'KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream';
     },
     hasIncomingEdge: function (node, arrayToSearch) {
-        return true;
+        for (var i = 0; i < arrayToSearch.length; i++) {
+            if (node.packageName == arrayToSearch[i].dependency)
+                return true;
+        }
+        return false;
     }
 };
 
