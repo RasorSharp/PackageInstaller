@@ -81,7 +81,10 @@ describe('processPackageArray', function () {
 
 describe('getDepedencyOrder', function () {
     it('Takes an array of strings representing packages and dependencies and determines what order they should be installed.', function () {
-        var input = ['KittenService: ',
+        var input = ['KittenService: CamelCaser', 'CamelCaser: '];
+        var expectedOutput = 'CamelCaser, KittenService';
+
+        input = ['KittenService: ',
             'Leetmeme: Cyberportal',
             'Cyberportal: Ice',
             'CamelCaser: KittenService',

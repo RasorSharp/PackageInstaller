@@ -31,7 +31,39 @@ PackageProcessor = {
         return parsedPackages;
     },
     getDependencyOrder: function (packagesArray) {
-        return 'KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream';
+        if (packagesArray == null)
+            throw new Error('Cannot process null array!');
+
+        if (packagesArray.length == 0)
+            throw new Error('Cannot process an empty array!');
+
+        if (!Array.isArray(packagesArray))
+            throw new Error('Provided input is not an array!');
+
+        var processedPackages = PackageProcessor.processPackageArray(packagesArray);
+        var L = new Array();
+        var S = processedPackages.filter(x => PackageProcessor.hasIncomingEdge(x, processedPackages) == false);
+        var n = null;
+
+        while (S.length) {
+            n = S.pop();
+            L.push(n.packageName);
+
+            var m = processedPackages.filter(x => x.packageName == n.dependency)[0];
+            if (m != undefined) {
+                n.dependency = '';
+                if (!PackageProcessor.hasIncomingEdge(m, processedPackages)) {
+                    S.unshift(m);
+                }
+            }
+        }
+
+        for (var i = 0; i < processedPackages.length; i++) {
+            if (PackageProcessor.hasIncomingEdge(processedPackages[i], processedPackages))
+                throw new Error('Cycle detected!');
+        }
+
+        return L.reverse().join(', ');
     },
     hasIncomingEdge: function (node, arrayToSearch) {
         for (var i = 0; i < arrayToSearch.length; i++) {
