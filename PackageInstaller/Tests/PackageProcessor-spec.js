@@ -18,17 +18,24 @@ describe('parsePackage', function () {
         expect(actual).to.eql(expectedOutput);
 
         //tests for unexpected inputs
-        input = 'KittenService CamelCaser';
-        expect(PackageProcessor.parsePackage(input)).to.throw(Error);
+        var invalidInput;
+        var badFn = function () {
+            PackageProcessor.parsePackage(invalidInput);
+        }
+        expect(badFn).to.throw();
 
-        input = 'KittenService';
-        expect(PackageProcessor.parsePackage(input)).to.throw(Error);
+        invalidInput = 'KittenService CamelCaser'
+        expect(badFn).to.throw();
 
-        input = '';
-        expect(PackageProcessor.parsePackage(input)).to.throw(Error);
+        invalidInput = 'KittenService';
+        expect(badFn).to.throw();
 
-        input = null;
-        expect(PackageProcessor.parsePackage(input)).to.throw(Error);
+        invalidInput = '';
+        expect(badFn).to.throw();
+
+        invalidInput = null;
+        expect(badFn).to.throw();
+
         //end unexepected inputs
 
     });
