@@ -41,29 +41,32 @@ PackageProcessor = {
             throw new Error('Provided input is not an array!');
 
         var processedPackages = PackageProcessor.processPackageArray(packagesArray);
-        var L = new Array();
-        var S = processedPackages.filter(x => PackageProcessor.hasIncomingEdge(x, processedPackages) == false);
+
+        //used the explanation of Kahn's algorithm from https://en.wikipedia.org/wiki/Topological_sorting as a basis for my solution
+        var L = new Array();  //empty array that will contain the correct order for package installation
+        var S = processedPackages.filter(x => PackageProcessor.hasIncomingEdge(x, processedPackages) == false); //array that will contain all packages that have no incoming edge (leafs)
         var n = null;
 
         while (S.length) {
-            n = S.pop();
-            L.push(n.packageName);
+            n = S.pop(); //remove the last package from S
+            L.push(n.packageName); //add the package's name to the correct order.
 
-            var m = processedPackages.filter(x => x.packageName == n.dependency)[0];
-            if (m != undefined) {
-                n.dependency = '';
-                if (!PackageProcessor.hasIncomingEdge(m, processedPackages)) {
+            var m = processedPackages.filter(x => x.packageName == n.dependency)[0];  //find the package that the current node (n) depends on.
+            if (m != undefined) {  //this will only be undefined if the current node has no dependencies
+                n.dependency = '';  //remove the edge reference
+                if (!PackageProcessor.hasIncomingEdge(m, processedPackages)) { //if m no longer has incoming edges, add it to the first position in S
                     S.unshift(m);
                 }
             }
         }
 
+        //At this point, if the graph was acyclical, all packages should no longer have incoming edges.  If there are any packages with remaining dependencies, we encountered a cycle, and need to reject.
         for (var i = 0; i < processedPackages.length; i++) {
             if (PackageProcessor.hasIncomingEdge(processedPackages[i], processedPackages))
                 throw new Error('Cycle detected!');
         }
 
-        return L.reverse().join(', ');
+        return L.reverse().join(', '); //put the array in correct order and seperate elements by a comma.
     },
     hasIncomingEdge: function (node, arrayToSearch) {
         for (var i = 0; i < arrayToSearch.length; i++) {
