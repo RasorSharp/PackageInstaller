@@ -40,3 +40,26 @@ describe('parsePackage', function () {
 
     });
 });
+
+describe('processPackageArray', function () {
+    it('Takes an array of strings and runs them through the parsePackage function to validate packages are in correct format', function () {
+        var input = ['KittenService: ',
+            'Leetmeme: Cyberportal',
+            'Cyberportal: Ice',
+            'CamelCaser: KittenService',
+            'Fraudstream: Leetmeme',
+            'Ice: '
+        ]
+        var expectedOutput = [
+            { packageName: 'KittenService', dependency: '' },
+            { packageName: 'Leetmeme', dependency: 'Cyberportal' },
+            { packageName: 'Cyberportal', dependency: 'Ice' },
+            { packageName: 'CamelCaser', dependency: 'KittenService' },
+            { packageName: 'Fraudstream', dependency: 'Leetmeme' },
+            { packageName: 'Ice', dependency: '' }
+        ];
+        var actual = PackageProcessor.processPackageArray(input);
+
+        expect(actual).to.eql(expectedOutput);
+    });
+});
