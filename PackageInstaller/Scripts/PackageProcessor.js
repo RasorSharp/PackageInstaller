@@ -29,6 +29,9 @@ PackageProcessor = {
         });
 
         return parsedPackages;
+    },
+    getDependencyOrder: function (packagesArray) {
+        return 'KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream';
     }
 };
 
