@@ -15,14 +15,20 @@ PackageProcessor = {
         return { packageName: packageArr[0].trim(), dependency: packageArr[1].trim() };
     },
     processPackageArray: function (packagesArray) {
-        return [
-            { packageName: 'KittenService', dependency: '' },
-            { packageName: 'Leetmeme', dependency: 'Cyberportal' },
-            { packageName: 'Cyberportal', dependency: 'Ice' },
-            { packageName: 'CamelCaser', dependency: 'KittenService' },
-            { packageName: 'Fraudstream', dependency: 'Leetmeme' },
-            { packageName: 'Ice', dependency: '' }
-        ];
+        if (packagesArray == null) 
+            throw new Error('Cannot process null!');
+   
+        if (!Array.isArray(packagesArray))
+            throw new Error('Provided input is not an array!');
+
+        if (packagesArray.length == 0)
+            throw new Error('Provided input contains 0 packages!');
+
+        var parsedPackages = packagesArray.map(function (x) {
+            return PackageProcessor.parsePackage(x);
+        });
+
+        return parsedPackages;
     }
 };
 

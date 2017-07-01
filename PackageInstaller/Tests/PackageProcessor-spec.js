@@ -17,7 +17,7 @@ describe('parsePackage', function () {
 
         expect(actual).to.eql(expectedOutput);
 
-        //tests for unexpected inputs
+        //tests for invalid inputs
         var invalidInput;
         var badFn = function () {
             PackageProcessor.parsePackage(invalidInput);
@@ -36,7 +36,7 @@ describe('parsePackage', function () {
         invalidInput = null;
         expect(badFn).to.throw();
 
-        //end unexepected inputs
+        //end invalid inputs
 
     });
 });
@@ -62,7 +62,8 @@ describe('processPackageArray', function () {
 
         expect(actual).to.eql(expectedOutput);
 
-        //tests for unexpected inputs
+        //tests for invalid inputs
+
         var invalidInput = null;
         var badFn = function () {
             PackageProcessor.processPackageArray(invalidInput);
@@ -73,9 +74,8 @@ describe('processPackageArray', function () {
         expect(badFn).to.throw();
 
         invalidInput = 'Leetmeme: Cyberportal';
-        expect(badFN).to.throw();
+        expect(badFn).to.throw();
 
-
-        //end unexpected inputs
+        //end invalid inputs
     });
 });
