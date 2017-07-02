@@ -36,6 +36,9 @@ describe('parsePackage', function () {
         invalidInput = null;
         expect(badFn).to.throw();
 
+        invalidInput = undefined;
+        expect(badFn).to.throw();
+
         //end invalid inputs
     });
 });
@@ -75,6 +78,9 @@ describe('processPackageArray', function () {
         invalidInput = 'Leetmeme: Cyberportal';
         expect(badFn).to.throw();
 
+        invalidInput = undefined;
+        expect(badFn).to.throw();
+
         //end invalid inputs
     });
 });
@@ -94,6 +100,16 @@ describe('getDepedencyOrder', function () {
         var expectedOutput = 'KittenService, Ice, Cyberportal, Leetmeme, CamelCaser, Fraudstream';
         var actual = PackageProcessor.getDependencyOrder(input);
 
+        expect(actual).to.equal(expectedOutput);
+
+        input = ['1: ', '2: ', '3: 1', '4: 2'];
+        expectedOutput = '2, 1, 3, 4';
+        actual = PackageProcessor.getDependencyOrder(input);
+        expect(actual).to.equal(expectedOutput);
+
+        input = ['1: ']
+        expectedOutput = '1';
+        actual = PackageProcessor.getDependencyOrder(input);
         expect(actual).to.equal(expectedOutput);
 
         //tests for invalid inputs
@@ -118,6 +134,9 @@ describe('getDepedencyOrder', function () {
             'Fraudstream: ',
             'Ice: Leetmeme'
         ]
+        expect(badFn).to.throw();
+
+        invalidInput = undefined;
         expect(badFn).to.throw();
 
         //end invalid inputs
