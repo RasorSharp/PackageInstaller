@@ -4,8 +4,8 @@ var PackageProcessor;
 
 PackageProcessor = {
     parsePackage: function (packageString) {
-        if (packageString == null || packageString == '')
-            throw new Error('Cannot process a null or empty package!');
+        if (!packageString)
+            throw new Error('Cannot process input.  Input is not in a defined state.');
 
         var packageArr = packageString.split(':');
 
@@ -15,13 +15,13 @@ PackageProcessor = {
         return { packageName: packageArr[0].trim(), dependency: packageArr[1].trim() };
     },
     processPackageArray: function (packagesArray) {
-        if (packagesArray == null)
-            throw new Error('Cannot process null!');
+        if (!packagesArray)
+            throw new Error('Cannot process input.  Input is not in a defined state.');
 
         if (!Array.isArray(packagesArray))
             throw new Error('Provided input is not an array!');
 
-        if (packagesArray.length == 0)
+        if (packagesArray.length === 0)
             throw new Error('Provided input contains 0 packages!');
 
         var parsedPackages = packagesArray.map(function (x) {
@@ -31,10 +31,10 @@ PackageProcessor = {
         return parsedPackages;
     },
     getDependencyOrder: function (packagesArray) {
-        if (packagesArray == null)
-            throw new Error('Cannot process null array!');
+        if (!packagesArray)
+            throw new Error('Cannot process input.  Input is not in a defined state.');
 
-        if (packagesArray.length == 0)
+        if (packagesArray.length === 0)
             throw new Error('Cannot process an empty array!');
 
         if (!Array.isArray(packagesArray))
@@ -44,13 +44,13 @@ PackageProcessor = {
 
         //used the explanation of Kahn's algorithm from https://en.wikipedia.org/wiki/Topological_sorting as a basis for my solution
         var L = new Array();  //empty array that will contain the correct order for package installation
-        var S = processedPackages.filter(x => PackageProcessor.hasIncomingEdge(x, processedPackages) == false); //array that will contain all packages that have no incoming edge (leafs)
+        var S = processedPackages.filter(x => PackageProcessor.hasIncomingEdge(x, processedPackages) === false); //array that will contain all packages that have no incoming edge (leafs)
         var n = null;
         var x = new Array(); //array that will contains packages that have no dependencies.  These will be added after the packages that do have dependencies are correctly ordered.
         while (S.length) {
             n = S.pop(); //remove the last package from S
 
-            var m = processedPackages.filter(x => x.packageName == n.dependency)[0];  //find the package that the current node (n) depends on.
+            var m = processedPackages.filter(x => x.packageName === n.dependency)[0];  //find the package that the current node (n) depends on.
             if (m) {  //this will only be undefined if the current node has no dependencies
                 L.push(n.packageName); //add the package name to the order
                 n.dependency = '';  //remove the edge reference
@@ -73,7 +73,7 @@ PackageProcessor = {
     },
     hasIncomingEdge: function (node, arrayToSearch) {
         for (var i = 0; i < arrayToSearch.length; i++) {
-            if (node.packageName == arrayToSearch[i].dependency)
+            if (node.packageName === arrayToSearch[i].dependency)
                 return true;
         }
         return false;
