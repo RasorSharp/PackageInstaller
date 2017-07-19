@@ -84,6 +84,9 @@ describe('processPackageArray', function () {
         invalidInput = undefined;
         expect(badFn).to.throw();
 
+        invalidInput = ["E: A, D: E, B: C, C: D, A: B"];
+        expect(badFn).to.throw();
+
         //end invalid inputs
     });
 });
