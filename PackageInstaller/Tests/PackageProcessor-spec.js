@@ -11,8 +11,8 @@ describe('parsePackage', function () {
 
         expect(actual).to.eql(expectedOutput);
 
-        input = 'Camel Caser: ';
-        expectedOutput = { packageName: 'Camel Caser', dependency: '' };
+        input = 'CamelCaser: ';
+        expectedOutput = { packageName: 'CamelCaser', dependency: '' };
         actual = PackageProcessor.parsePackage(input);
 
         expect(actual).to.eql(expectedOutput);

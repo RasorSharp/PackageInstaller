@@ -7,6 +7,10 @@ PackageProcessor = {
         if (!packageString)
             throw new Error('Cannot process input.  Input is not in a defined state.');
 
+        var rExp = /^\w*:{1}\s\w*$|^\w*:{1}\s$/;
+        if (!rExp.test(packageString))
+            throw new Error('Package input not in expected format!');
+
         var packageArr = packageString.split(':');
 
         if (packageArr.length <= 1)
