@@ -30,6 +30,9 @@ describe('parsePackage', function () {
         invalidInput = 'KittenService';
         expect(badFn).to.throw();
 
+        invalidInput = "E: A, D: E, B: C, C: D, A: B";
+        expect(badFn).to.throw();
+
         invalidInput = '';
         expect(badFn).to.throw();
 
